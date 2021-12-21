@@ -46,12 +46,13 @@ for i,f in enumerate(files):
       ax=plt.subplot(4,7,i+1,projection=ccrs.PlateCarree())
       #ax=plt.subplot(4,7,ranks[i]+1,projection=ccrs.PlateCarree())
       ax.coastlines()
-      plt.pcolormesh(traj.lon,traj.lat,dd,vmin=0,vmax=30)
+      plt.pcolormesh(traj.lon,traj.lat,dd,vmin=0,vmax=30,cmap="binary_r")
       plt.title("%s %0.3f"%(f,keep[f][2].mean()))
       x2,y2=np.meshgrid(traj.lon[10:51],traj.lat)
-      plt.plot(np.ma.masked_array(x2.flatten()[mask2[:,10:51].flatten()],mask=keep[f][2]),    np.ma.masked_array(y2.flatten()[mask2[:,10:51].flatten()],mask=keep[f][2]),"k.",ms=0.5)
-      plt.plot(np.ma.masked_array(x2.flatten()[mask2[:,10:51].flatten()],mask=(1-keep[f][2])),np.ma.masked_array(y2.flatten()[mask2[:,10:51].flatten()],mask=(1-keep[f][2])),"r.",ms=0.5)
+      plt.plot(np.ma.masked_array(x2.flatten()[mask2[:,10:51].flatten()],mask=keep[f][2])[::2],    np.ma.masked_array(y2.flatten()[mask2[:,10:51].flatten()],mask=keep[f][2])[::2],"r.",ms=0.5)
+      plt.plot(np.ma.masked_array(x2.flatten()[mask2[:,10:51].flatten()],mask=(1-keep[f][2]))[::2],np.ma.masked_array(y2.flatten()[mask2[:,10:51].flatten()],mask=(1-keep[f][2]))[::2],"b.",ms=0.5)
       plt.colorbar()  
-      plt.show()
+
+plt.show()
 
 #plt.plot([keep[x][2].mean() for x in keep],dewpoint,".")
